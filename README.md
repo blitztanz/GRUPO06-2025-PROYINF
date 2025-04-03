@@ -1,4 +1,4 @@
-# GRUPO09-2025-PROYINF
+# GRUPO 09 - 2025 - PROYINF
 
 Este es el repositorio del "Grupo 09", cuyos integrantes son:
 
@@ -11,7 +11,7 @@ Este es el repositorio del "Grupo 09", cuyos integrantes son:
 
 ## Wiki
 
-Puede acceder a la Wiki mediante el siguiente [enlace](https://www.leagueoflegends.com/es-es/)
+Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/MatthewBlitztanz/GRUPO09-2025-PROYINF/wiki#grupo-09)
 
 ## Videos
 
