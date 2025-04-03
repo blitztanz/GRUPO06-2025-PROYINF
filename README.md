@@ -6,7 +6,7 @@ Este es el repositorio del "Grupo 09", cuyos integrantes son:
 * Emile Allué - 202273564-3
 * Matías Farías - 202273589-9
 * Consuelo Gálvez - 202273594-5
-* Lucas Rodríguez - 2022#####-3
+* Lucas Rodríguez - 202273533-3
 
 * **Tutor**: Máximiliano Alexander Tapía Castillo
 
