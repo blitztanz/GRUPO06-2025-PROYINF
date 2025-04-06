@@ -8,7 +8,7 @@ Este es el repositorio del "Grupo 09", cuyos integrantes son:
 * Consuelo Gálvez - 202273594-5
 * Lucas Rodríguez - 202273533-3
 
-* **Tutor**: Máximiliano Alexander Tapía Castillo
+* **Tutor**: Maximiliano Alexander Tapia Castillo
 
 
 ## Wiki
