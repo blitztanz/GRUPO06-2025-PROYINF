@@ -2,7 +2,6 @@
 
 Este es el repositorio del "Grupo 09", cuyos integrantes son:
 
-
 * Emile Allué - 202273564-3
 * Matías Farías - 202273589-9
 * Consuelo Gálvez - 202273594-5
@@ -22,5 +21,14 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 
 
 ## Aspectos técnicos relevantes
+
+### Tecnologías utilizadas
+
+- **Backend**: PHP
+- **Frontend**: HTML, CSS, JavaScript
+- **Base de datos**: MySQL
+- **Control de versiones**: GitHub
+
+### Pasos para levantar el proyecto
 
 ...
