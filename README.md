@@ -24,9 +24,9 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 
 ### Tecnologías utilizadas
 
-- **Backend**: PHP
+- **Backend**: Python (Django)
 - **Frontend**: HTML, CSS, JavaScript
-- **Base de datos**: MySQL
+- **Base de datos**: SQLite
 - **Control de versiones**: GitHub
 
 ### Pasos para levantar el proyecto
