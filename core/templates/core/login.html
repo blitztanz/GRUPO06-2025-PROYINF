@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Plataforma PAES</title>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+
+    <form action="{% url 'menu_profesor' %}" method="get">
+        <label for="tipo">Tipo de usuario:</label>
+        <select id="tipo" name="tipo">
+            <option value="profesor">Profesor</option>
+            <option value="alumno">Alumno</option>
+            <option value="externo">Visualizador Externo</option>
+        </select>
+        <br><br>
+        <button type="submit">Ingresar</button>
+    </form>
+</body>
+</html>
