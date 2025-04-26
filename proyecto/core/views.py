@@ -4,17 +4,19 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 def login_view(request):
-    if request.method == 'GET' and request.GET.get('tipo'):
-        tipo_usuario = request.GET.get('tipo')
+    if 'tipo' in request.GET:
+        tipo_usuario = request.GET['tipo']
+        print("TIPO DE USUARIO:", tipo_usuario)
+
         if tipo_usuario == 'profesor':
             return redirect('menu_profesor')
         elif tipo_usuario == 'alumno':
             return redirect('menu_alumno')
         elif tipo_usuario == 'externo':
             return redirect('menu_externo')
-    return render(request, 'core/login.html')
+        else:
+            print("Tipo de usuario inválido:", tipo_usuario)
 
-def login_view(request):
     return render(request, 'core/login.html')
 
 def menu_profesor(request):
@@ -24,7 +26,7 @@ def menu_alumno(request):
     return render(request, 'core/menu_alumno.html')
 
 def ver_banco(request):
-    preguntas = []  # Todavía no hay base de datos, lista vacía por ahora
+    preguntas = []
     return render(request, 'core/banco.html', {'preguntas': preguntas})
 
 def menu_externo(request):
