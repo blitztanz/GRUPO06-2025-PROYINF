@@ -117,13 +117,13 @@ cd GRUPO09-2025-PROYINF
 
 ### 2. Configura la base de datos
 
-Conéctate a PostgreSQL:
+#### 2.1. Conéctate a PostgreSQL:
 
 ```bash
 psql -h localhost -U postgres -d postgres
 ```
 
-Dentro del prompt de `psql`:
+#### 2.2. Dentro del prompt de `psql`:
 
 ```sql
 CREATE DATABASE plataforma_paes;
@@ -135,14 +135,14 @@ Crea las tablas necesarias: `usuarios`, `preguntas`, `reportes`, `reportes_pregu
 
 ### 3. Arranca el backend
 
-Cargar datos iniciales (opcional):
+#### 3.1. Cargar datos iniciales (opcional):
 
 ```bash
 cd backend
 psql -h localhost -U postgres -d plataforma_paes -f seed.sql
 ```
 
-Copia el archivo `.env` de ejemplo o créalo manualmente:
+#### 3.2. Copia el archivo `.env` de ejemplo o créalo manualmente:
 
 ```bash
 cp .env.example .env
@@ -150,7 +150,7 @@ cp .env.example .env
 
 Edita `.env` y ajusta la variable `DATABASE_URL` con tu contraseña de PostgreSQL.
 
-Instala dependencias y ejecuta el servidor:
+#### 3.3. Instala dependencias y ejecuta el servidor:
 
 ```bash
 npm install
