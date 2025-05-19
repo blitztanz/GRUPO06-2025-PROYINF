@@ -9,17 +9,20 @@ Este es el repositorio del "Grupo 09", cuyos integrantes son:
 
 * **Tutor**: Maximiliano Alexander Tapia Castillo
 
+---
 
 ## Wiki
 
 Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/MatthewBlitztanz/GRUPO09-2025-PROYINF/wiki#grupo-09)
 
+---
 
 ## Videos
 
 * [Video de presentación del cliente](https://aula.usm.cl/pluginfile.php/6994529/mod_resource/content/1/video1943571039.mp4)
-* [Video de presentación prototipo *Hito 3*](https://aula.usm.cl/pluginfile.php/6994529/mod_resource/content/1/video1943571039.mp4)
+* [Video de presentación del prototipo - Hito 3](https://aula.usm.cl/pluginfile.php/6994529/mod_resource/content/1/video1943571039.mp4)
 
+---
 
 ## Aspectos técnicos relevantes
 
@@ -29,6 +32,8 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 - **Frontend**: React
 - **Base de datos**: PostgreSQL
 - **Control de versiones**: GitHub
+
+---
   
 ## Estructura del proyecto
 
@@ -72,87 +77,100 @@ plataforma_PAES/
             └── Notas.jsx
 ```
 
+---
+
 ## Requisitos:
-    Node.js ≥ 16.x
 
-    npm (viene con Node.js)
+- Node.js ≥ 16.x  
+- npm (incluido con Node.js)  
+- PostgreSQL ≥ 12.x  
 
-    PostgreSQL ≥ 12.x
+---
 
-### Dependencias principales del backend (en backend/package.json):
-    
-- java
-- express
-- cors
-- dotenv
-- pg
-- nodemon (dev)
+## Dependencias 
 
-### Dependencias principales del frontend (en frontend/package.json):
+### Backend (`backend/package.json`)
 
-- nginx
-- react
-- react-dom
+- express  
+- cors  
+- dotenv  
+- pg  
+- nodemon (solo para desarrollo)
+
+### Frontend (`frontend/package.json`)
+
+- react  
+- react-dom  
+- react-router-dom  
 - react-scripts
-- react-router-dom
+
+---
 
 ## Levantamiento del proyecto
     
-### Clona el repositorio
+### 1. Clona el repositorio
 
-```
+```bash
 git clone https://github.com/MatthewBlitztanz/GRUPO09-2025-PROYINF.git
 cd GRUPO09-2025-PROYINF
 ```
 
-### Configura la base de datos
+### 2. Configura la base de datos
 
-#### Conéctate a Postgres:
+Conéctate a PostgreSQL:
 
-```
+```bash
 psql -h localhost -U postgres -d postgres
 ```
 
-#### En el prompt de psql:
+Dentro del prompt de `psql`:
 
-```
+```sql
 CREATE DATABASE plataforma_paes;
 \c plataforma_paes
 ```
 
-#### Crea tablas (si no existen):
+Crea las tablas necesarias: `usuarios`, `preguntas`, `reportes`, `reportes_preguntas`, `notas`.  
+> Consulta el archivo `backend/seed.sql` para ver el script completo.
 
-- Usuarios, preguntas, reportes, reportes_preguntas, notas
-- **(Consulta el README para el script SQL completo)**
+### 3. Arranca el backend
 
-### Arranca el backend
+Cargar datos iniciales (opcional):
 
-#### Dar datos iniciales locales:
-
-```
+```bash
 cd backend
 psql -h localhost -U postgres -d plataforma_paes -f seed.sql
 ```
-```
-cd backend
-cp .env.example .env   # o crea .env manualmente
+
+Copia el archivo `.env` de ejemplo o créalo manualmente:
+
+```bash
+cp .env.example .env
 ```
 
-#### Ajusta DATABASE_URL en .env con tu contraseña de Postgres
+Edita `.env` y ajusta la variable `DATABASE_URL` con tu contraseña de PostgreSQL.
 
-```
+Instala dependencias y ejecuta el servidor:
+
+```bash
 npm install
 npm run dev
 ```
 
-- Debes ver: API corriendo en http://localhost:4000
+- Deberías ver el mensaje: **API corriendo en http://localhost:4000**
 
-### Arranca el frontend
+### 4. Arranca el frontend
 
-```
+```bash
 cd ../frontend
 npm install
 npm start
 ```
 
-- El navegador abrirá http://localhost:3000
+- Se abrirá automáticamente el navegador en: **http://localhost:3000**
+
+---
+
+## ¡Listo! 😒👌
+
+¡¡¡Ya tienes la plataforma funcionando en modo local!!!
