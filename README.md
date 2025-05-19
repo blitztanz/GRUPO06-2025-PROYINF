@@ -18,6 +18,7 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 ## Videos
 
 * [Video de presentación del cliente](https://aula.usm.cl/pluginfile.php/6994529/mod_resource/content/1/video1943571039.mp4)
+* [Video de presentación prototipo *Hito 3*](https://aula.usm.cl/pluginfile.php/6994529/mod_resource/content/1/video1943571039.mp4)
 
 
 ## Aspectos técnicos relevantes
