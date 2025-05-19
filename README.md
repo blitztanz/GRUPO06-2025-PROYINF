@@ -24,72 +24,127 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 
 ### Tecnologías utilizadas
 
-- **Backend**: Python (Django)
-- **Frontend**: HTML, CSS, JavaScript
-- **Base de datos**: SQLite
+- **Backend**: Node.js
+- **Frontend**: React
+- **Base de datos**: SQL
 - **Control de versiones**: GitHub
   
 ## Estructura del proyecto
 
 ```
-GRUPO09-2025-PROYINF/
-├── proyecto/
-│   ├── core/
-│   │   ├── templates/
-│   │   │   └── core/
-│   │   ├── views.py
-│   │   ├── urls.py
-│   ├── plataforma_paes/
-│   ├── manage.py
-│   ├── requirements.txt
-│   └── db.sqlite3
+plataforma_PAES/
+├── .gitignore
 ├── README.md
-└── .gitignore
+├── backend/
+│   ├── .env
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── server.js
+│   ├── db.js
+│   └── routes/
+│       ├── auth.js
+│       ├── alumnos.js
+│       ├── preguntas.js
+│       ├── reportes.js
+│       └── notas.js
+└── frontend/
+    ├── package.json
+    ├── package-lock.json
+    ├── public/
+    │   ├── index.html
+    │   └── <!-- otros assets estáticos -->
+    └── src/
+        ├── App.js
+        ├── index.js
+        ├── hooks/
+        │   └── useAuth.js
+        └── components/
+            ├── Login.jsx
+            ├── MenuProfesor.jsx
+            ├── VerAlumnos.jsx
+            ├── CrearReporte.jsx
+            ├── VerReportes.jsx
+            ├── DetalleReporte.jsx
+            ├── VerNotas.jsx
+            ├── MenuAlumno.jsx
+            ├── MenuExterno.jsx
+            └── Notas.jsx
+
 ```
 
-### Pasos para levantar el proyecto
+Requisitos:
+    Node.js ≥ 16.x
 
-1. **Clonar el repositorio**
+    npm (viene con Node.js)
 
-```bash
+    PostgreSQL ≥ 12.x
+
+Dependencias principales del backend (en backend/package.json):
+java
+Copiar
+Editar
+express
+cors
+dotenv
+pg
+nodemon (dev)
+Dependencias principales del frontend (en frontend/package.json):
+
+nginx
+Copiar
+Editar
+react
+react-dom
+react-scripts
+react-router-dom
+Cómo levantar el proyecto
+Clona el repositorio
+
+bash
+Copiar
+Editar
 git clone https://github.com/MatthewBlitztanz/GRUPO09-2025-PROYINF.git
-```
+cd GRUPO09-2025-PROYINF
+Configura la base de datos
 
-2. **Entrar a la carpeta del proyecto**
+bash
+Copiar
+Editar
+# Conéctate a Postgres
+psql -h localhost -U postgres -d postgres
 
-```bash
-cd GRUPO09-2025-PROYINF/proyecto
-```
+# En el prompt de psql:
+CREATE DATABASE plataforma_paes;
+\c plataforma_paes
 
-3. **Instalar dependencias**
+# Crea tablas (si no existen)
+-- Usuarios, preguntas, reportes, reportes_preguntas, notas
+-- (Consulta el README para el script SQL completo)
+Arranca el backend
 
-```bash
-pip install -r requirements.txt
-```
+# Dar datos iniciales locales:
+cd backend
+psql -h localhost -U postgres -d plataforma_paes -f seed.sql
 
-4. **Aplicar migraciones**
 
-```bash
-python manage.py migrate
-```
+bash
+Copiar
+Editar
+cd backend
+cp .env.example .env   # o crea .env manualmente
+# Ajusta DATABASE_URL en .env con tu contraseña de Postgres
+npm install
+npm run dev
+Debes ver: API corriendo en http://localhost:4000
 
-5. **Levantar el servidor**
+Arranca el frontend
 
-```bash
-python manage.py runserver
-```
+bash
+Copiar
+Editar
+cd ../frontend
+npm install
+npm start
+El navegador abrirá http://localhost:3000
 
-6. **Acceder desde el navegador**
-
-```
-http://127.0.0.1:8000/
-```
-
-## Rutas principales
-
-- `/` → Página de login (selección de tipo de usuario)  
-- `/banco/` → Banco de preguntas
-- `/menu/alumno/` → Menú para alumno  
-- `/menu/externo/` → Menú para visualizador externo  
-- `/admin/` → Panel administrativo de Django
 
