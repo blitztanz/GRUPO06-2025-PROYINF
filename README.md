@@ -73,79 +73,87 @@ plataforma_PAES/
 
 ```
 
-Requisitos:
+## Requisitos:
     Node.js ≥ 16.x
 
     npm (viene con Node.js)
 
     PostgreSQL ≥ 12.x
 
-Dependencias principales del backend (en backend/package.json):
-java
-Copiar
-Editar
-express
-cors
-dotenv
-pg
-nodemon (dev)
-Dependencias principales del frontend (en frontend/package.json):
+### Dependencias principales del backend (en backend/package.json):
+    
+- java
+- express
+- cors
+- dotenv
+- pg
+- nodemon (dev)
 
-nginx
-Copiar
-Editar
-react
-react-dom
-react-scripts
-react-router-dom
-Cómo levantar el proyecto
-Clona el repositorio
+### Dependencias principales del frontend (en frontend/package.json):
 
-bash
-Copiar
-Editar
+- nginx
+- react
+- react-dom
+- react-scripts
+- react-router-dom
+
+## Levantamiento del proyecto
+    
+### Clona el repositorio
+
+```
 git clone https://github.com/MatthewBlitztanz/GRUPO09-2025-PROYINF.git
 cd GRUPO09-2025-PROYINF
-Configura la base de datos
+```
 
-bash
-Copiar
-Editar
-# Conéctate a Postgres
+### Configura la base de datos
+
+#### Conéctate a Postgres:
+
+```
 psql -h localhost -U postgres -d postgres
+```
 
-# En el prompt de psql:
+#### En el prompt de psql:
+
+```
 CREATE DATABASE plataforma_paes;
 \c plataforma_paes
+```
 
-# Crea tablas (si no existen)
+#### Crea tablas (si no existen):
+
 -- Usuarios, preguntas, reportes, reportes_preguntas, notas
 -- (Consulta el README para el script SQL completo)
-Arranca el backend
 
-# Dar datos iniciales locales:
+### Arranca el backend
+
+#### Dar datos iniciales locales:
+
+```
 cd backend
 psql -h localhost -U postgres -d plataforma_paes -f seed.sql
-
-
-bash
-Copiar
-Editar
+```
+```
 cd backend
 cp .env.example .env   # o crea .env manualmente
-# Ajusta DATABASE_URL en .env con tu contraseña de Postgres
+```
+
+#### Ajusta DATABASE_URL en .env con tu contraseña de Postgres
+
+```
 npm install
 npm run dev
-Debes ver: API corriendo en http://localhost:4000
+```
 
-Arranca el frontend
+- Debes ver: API corriendo en http://localhost:4000
 
-bash
-Copiar
-Editar
+### Arranca el frontend
+
+```
 cd ../frontend
 npm install
 npm start
-El navegador abrirá http://localhost:3000
+```
 
-
+- El navegador abrirá http://localhost:3000
