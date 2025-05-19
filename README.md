@@ -70,7 +70,6 @@ plataforma_PAES/
             ├── MenuAlumno.jsx
             ├── MenuExterno.jsx
             └── Notas.jsx
-
 ```
 
 ## Requisitos:
@@ -123,8 +122,8 @@ CREATE DATABASE plataforma_paes;
 
 #### Crea tablas (si no existen):
 
--- Usuarios, preguntas, reportes, reportes_preguntas, notas
--- (Consulta el README para el script SQL completo)
+- Usuarios, preguntas, reportes, reportes_preguntas, notas
+- **(Consulta el README para el script SQL completo)**
 
 ### Arranca el backend
 
