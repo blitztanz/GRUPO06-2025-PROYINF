@@ -26,7 +26,11 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 
 - **Backend**: Node.js
 - **Frontend**: React
+<<<<<<< HEAD
 - **Base de datos**: SQL
+=======
+- **Base de datos**: PostgreSQL
+>>>>>>> dc052cc4471c966e73da10781f3a983febc17606
 - **Control de versiones**: GitHub
   
 ## Estructura del proyecto
