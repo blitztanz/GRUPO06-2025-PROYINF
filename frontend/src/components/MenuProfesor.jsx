@@ -1,4 +1,3 @@
-// frontend/src/components/MenuProfesor.jsx
 import { Link } from 'react-router-dom'
 
 export default function MenuProfesor() {
@@ -11,6 +10,9 @@ export default function MenuProfesor() {
         </li>
         <li style={{ margin: '0.5rem 0' }}>
           <Link to="/menu_profesor/reportes">📝 Crear Reportes</Link>
+        </li>
+        <li style={{ margin: '0.5rem 0' }}>
+          <Link to="/menu_profesor/banco_preguntas">❓ Banco de preguntas</Link>
         </li>
       </ul>
     </div>

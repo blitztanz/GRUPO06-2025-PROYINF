@@ -1,6 +1,6 @@
-// frontend/src/components/Login.jsx
 import { useState, useEffect } from 'react'
 import { useNavigate }  from 'react-router-dom'
+import { useUser } from '../context/UserContext'  // Importar hook de contexto
 
 export default function Login() {
   const [tipo, setTipo]             = useState('')
@@ -9,18 +9,19 @@ export default function Login() {
   const [loadingUsers, setLoading]  = useState(false)
   const [error, setError]           = useState(null)
   const navigate = useNavigate()
+  const { setUser } = useUser()   // Obtener setUser del contexto
 
-  // Cada vez que cambie el tipo a "alumno", traemos la lista
+  // Cargar lista de alumnos si tipo es 'alumno'
   useEffect(() => {
     if (tipo === 'alumno') {
       setLoading(true)
-      fetch('http://localhost:4000/api/alumnos')
+      fetch('http://localhost:4000/api/alumnos', { credentials: 'include' })
         .then(r => r.json())
         .then(b => {
           if (!b.ok) throw new Error(b.error)
           setUsuarios(b.alumnos)
         })
-        .catch(err => setError('No pude cargar alumnos'))
+        .catch(() => setError('No pude cargar alumnos'))
         .finally(() => setLoading(false))
     } else {
       setUsuarios([])
@@ -34,22 +35,35 @@ export default function Login() {
     if (tipo === 'alumno' && !selectedUserId)
       return alert('Selecciona tu usuario.')
 
-    // Guardamos el tipo y, si es alumno, el ID
+    // Guardamos en localStorage (opcional)
     localStorage.setItem('userTipo', tipo)
     if (tipo === 'alumno') {
       localStorage.setItem('alumnoId', selectedUserId)
     }
 
-    // Redirigimos
-    if (tipo === 'profesor')      navigate('/menu_profesor')
-    else if (tipo === 'alumno')   navigate('/menu_alumno')
-    else                           navigate('/menu_externo')
+    // Guardar usuario en contexto global
+    setUser({
+      tipo,
+      id: selectedUserId || null,
+    })
+
+    // Redirigir según tipo
+    if (tipo === 'profesor') navigate('/menu_profesor')
+    else if (tipo === 'alumno') navigate('/menu_alumno')
+    else navigate('/menu_externo')
+  }
+
+  // Nueva función para login con Google
+  const handleGoogleLogin = () => {
+    // Redirecciona a la ruta de autenticación en backend
+    window.location.href = 'http://localhost:4000/auth/google'
   }
 
   return (
     <div style={{ maxWidth: 400, margin: 'auto', padding: 20 }}>
       <h1>Login PAES</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+
       <form onSubmit={handleSubmit}>
         {/* Selección de tipo */}
         <label>Tipo de usuario:</label>
@@ -96,6 +110,25 @@ export default function Login() {
           Entrar
         </button>
       </form>
+
+      <hr style={{ margin: '20px 0' }} />
+
+      {/* Botón para login con Google */}
+      <button
+        onClick={handleGoogleLogin}
+        style={{
+          width: '100%',
+          padding: '10px',
+          backgroundColor: '#4285F4',
+          color: 'white',
+          border: 'none',
+          borderRadius: 4,
+          cursor: 'pointer',
+          fontSize: '1rem',
+        }}
+      >
+        Iniciar sesión con Google
+      </button>
     </div>
   )
 }
