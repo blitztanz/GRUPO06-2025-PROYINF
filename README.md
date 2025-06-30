@@ -80,8 +80,7 @@ plataforma_PAES/
             ├── VerNotas.jsx
             ├── MenuAlumno.jsx
             ├── MenuExterno.jsx
-            ├── Navbar.jsx
-            └── Notas.jsx
+            └── Navbar.jsx
 ```
 
 ---
