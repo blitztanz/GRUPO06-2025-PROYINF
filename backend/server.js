@@ -4,12 +4,10 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import passport from 'passport';
 
-// Importa tu configuración de passport con GoogleStrategy
-import './config/passport.js'; // IMPORTANTE: solo importa el archivo para ejecutar la configuración
+import './config/passport.js';  // Solo importa para ejecutar config
 
-// Importa rutas
+// Rutas
 import authRouter from './routes/auth.js';
-import authGoogleRouter from './routes/authGoogle.js';  // rutas para /auth/google
 import alumnosRouter from './routes/alumnos.js';
 import reportesRouter from './routes/reportes.js';
 import preguntasRouter from './routes/preguntas.js';
@@ -19,37 +17,38 @@ dotenv.config();
 
 const app = express();
 
+// CORS: habilita cookies entre frontend y backend
 app.use(cors({
-  origin: 'http://localhost:3000',  // URL de tu frontend React
-  credentials: true,                 // Para que se puedan enviar cookies y sesiones
+  origin: 'http://localhost:3000',
+  credentials: true,
 }));
 
 app.use(express.json());
 
-// Configurar sesión antes de Passport
+// Sesiones
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'un-secreto-muy-secreto',
+  secret: process.env.SESSION_SECRET || 'mi_secreto',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // true si usas HTTPS
+    secure: false,       // true en producción con HTTPS
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 1 día
-  }
+  },
 }));
 
-// Inicializar Passport y sesión
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Rutas
-app.use('/auth', authRouter);        // tus rutas de auth normales
-app.use('/auth', authGoogleRouter);  // rutas /auth/google y callback
+app.use('/auth', authRouter);
 app.use('/api/alumnos', alumnosRouter);
 app.use('/api/reportes', reportesRouter);
 app.use('/api/preguntas', preguntasRouter);
 app.use('/api/notas', notasRouter);
 
+// Puerto
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`API corriendo en http://localhost:${PORT}`);

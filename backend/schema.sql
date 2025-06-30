@@ -3,7 +3,9 @@ CREATE TABLE usuarios (
   id SERIAL PRIMARY KEY,
   tipo VARCHAR(20) NOT NULL,
   nombre VARCHAR(100) NOT NULL,
-  correo VARCHAR(100) UNIQUE NOT NULL
+  correo VARCHAR(100) UNIQUE NOT NULL,
+  google_id TEXT UNIQUE,
+  avatar_url TEXT
 );
 
 -- preguntas

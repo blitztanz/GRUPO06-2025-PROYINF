@@ -1,61 +1,76 @@
-// frontend/src/components/VerNotas.jsx
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
 export default function VerNotas() {
-  const { alumnoId } = useAuth()
-  const navigate = useNavigate()
-  const [notas, setNotas] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const [notas, setNotas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Si no hay alumnoId, redirigimos al login
-    if (!alumnoId) {
-      navigate('/login')
-      return
+    if (!user || user.tipo !== 'alumno') {
+      navigate('/login');
+      return;
     }
 
-    fetch(`/api/notas?alumnoId=${alumnoId}`)
+    fetch(`/api/notas?alumnoId=${user.id}`)
       .then(res => res.json())
       .then(body => {
-        if (!body.ok) throw new Error(body.error)
-        setNotas(body.notas)
+        if (!body.ok) throw new Error(body.error);
+        setNotas(body.notas);
       })
       .catch(err => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [alumnoId, navigate])
+      .finally(() => setLoading(false));
+  }, [user, navigate]);
 
-  if (loading) return <p>Cargando notas…</p>
-  if (error)   return <p style={{ color: 'red' }}>Error: {error}</p>
+  if (loading) {
+    return (
+      <div className="text-center mt-10 text-indigo-600 font-semibold text-lg">
+        Cargando notas…
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center mt-10 text-red-500 font-semibold">
+        Error: {error}
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>Mis Notas</h2>
-      {notas.length === 0
-        ? <p>No tienes notas aún.</p>
-        : (
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
+    <div className="max-w-4xl w-full mx-auto bg-white p-8 mt-16 mb-8 rounded-2xl shadow-lg border border-gray-200">
+      <h2 className="text-3xl font-bold text-indigo-700 mb-6 text-center">
+        Mis Notas
+      </h2>
+
+      {notas.length === 0 ? (
+        <p className="text-center text-gray-500">No tienes notas aún.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+            <thead className="bg-indigo-100 text-indigo-700 text-left">
               <tr>
-                <th>Reporte</th>
-                <th>Fecha</th>
-                <th>Nota</th>
+                <th className="px-6 py-3 text-sm font-semibold">Reporte</th>
+                <th className="px-6 py-3 text-sm font-semibold">Fecha</th>
+                <th className="px-6 py-3 text-sm font-semibold">Nota</th>
               </tr>
             </thead>
-            <tbody>
-              {notas.map(n => (
-                <tr key={n.reporte_id}>
-                  <td>{n.titulo}</td>
-                  <td>{new Date(n.creado).toLocaleDateString()}</td>
-                  <td>{n.valor}</td>
+            <tbody className="bg-white divide-y divide-gray-100">
+              {notas.map((n) => (
+                <tr key={n.reporte_id} className="hover:bg-indigo-50 transition">
+                  <td className="px-6 py-4 text-gray-700">{n.titulo}</td>
+                  <td className="px-6 py-4 text-gray-500">{new Date(n.creado).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 font-medium text-indigo-600">{n.valor}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        )
-      }
+        </div>
+      )}
     </div>
-  )
+  );
 }
