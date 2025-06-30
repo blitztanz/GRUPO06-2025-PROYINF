@@ -40,13 +40,14 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 
 ```
 plataforma_PAES/
-├── .gitignore
 ├── README.md
 ├── backend/
-│   ├── .env
+│   ├── .gitignore
 │   ├── package.json
 │   ├── package-lock.json
 │   ├── server.js
+│   ├── schema.sql
+│   ├── seed.sql
 │   ├── db.js
 │   └── routes/
 │       ├── auth.js
@@ -54,7 +55,10 @@ plataforma_PAES/
 │       ├── preguntas.js
 │       ├── reportes.js
 │       └── notas.js
+│   └── config/
+│       └── passport.js
 └── frontend/
+    ├── .gitignore
     ├── package.json
     ├── package-lock.json
     ├── public/
@@ -67,6 +71,7 @@ plataforma_PAES/
         └── components/
             ├── Login.jsx
             ├── MenuProfesor.jsx
+            ├── BancoPreguntas.jsx
             ├── VerAlumnos.jsx
             ├── CrearReporte.jsx
             ├── VerReportes.jsx
@@ -74,6 +79,7 @@ plataforma_PAES/
             ├── VerNotas.jsx
             ├── MenuAlumno.jsx
             ├── MenuExterno.jsx
+            ├── Navbar.jsx
             └── Notas.jsx
 ```
 
@@ -126,12 +132,16 @@ psql -h localhost -U postgres -d postgres
 #### 2.2. Dentro del prompt de `psql`:
 
 ```sql
-CREATE DATABASE plataforma_paes;
+CREATE DATABASE plataforma_paes ENCODING 'UTF8';
 \c plataforma_paes
 ```
 
 Crea las tablas necesarias: `usuarios`, `preguntas`, `reportes`, `reportes_preguntas`, `notas`.  
-> Consulta el archivo `backend/seed.sql` para ver el script completo.
+
+```bash
+cd backend
+psql -h localhost -U postgres -d plataforma_paes -f schema.sql
+```
 
 ### 3. Arranca el backend
 
@@ -143,6 +153,8 @@ psql -h localhost -U postgres -d plataforma_paes -f seed.sql
 ```
 
 #### 3.2. Copia el archivo `.env` de ejemplo o créalo manualmente:
+
+DATABASE_URL=postgres://postgres:[password]@localhost:5432/plataforma_paes
 
 ```bash
 cp .env.example .env
