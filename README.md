@@ -57,8 +57,7 @@ plataforma_PAES/
     ├── package.json
     ├── package-lock.json
     ├── public/
-    │   ├── index.html
-    │   └── <!-- otros assets estáticos -->
+    │   └── index.html
     └── src/
         ├── App.js
         ├── index.js
