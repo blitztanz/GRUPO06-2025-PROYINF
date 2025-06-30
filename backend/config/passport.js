@@ -33,7 +33,7 @@ async (accessToken, refreshToken, profile, done) => {
   }
 }));
 
-// Serializar usuario para sesión (puedes adaptar según cómo manejes sesiones)
+// Serializar usuario para sesión 
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
