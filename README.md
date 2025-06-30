@@ -40,13 +40,14 @@ Puede acceder a la Wiki mediante el siguiente [enlace](https://github.com/Matthe
 
 ```
 plataforma_PAES/
-├── .gitignore
 ├── README.md
 ├── backend/
-│   ├── .env
+│   ├── .gitignore
 │   ├── package.json
 │   ├── package-lock.json
 │   ├── server.js
+│   ├── schema.sql
+│   ├── seed.sql
 │   ├── db.js
 │   └── routes/
 │       ├── auth.js
@@ -54,7 +55,10 @@ plataforma_PAES/
 │       ├── preguntas.js
 │       ├── reportes.js
 │       └── notas.js
+│   └── config/
+│       └── passport.js
 └── frontend/
+    ├── .gitignore
     ├── package.json
     ├── package-lock.json
     ├── public/
@@ -67,6 +71,7 @@ plataforma_PAES/
         └── components/
             ├── Login.jsx
             ├── MenuProfesor.jsx
+            ├── BancoPreguntas.jsx
             ├── VerAlumnos.jsx
             ├── CrearReporte.jsx
             ├── VerReportes.jsx
@@ -74,6 +79,7 @@ plataforma_PAES/
             ├── VerNotas.jsx
             ├── MenuAlumno.jsx
             ├── MenuExterno.jsx
+            ├── Navbar.jsx
             └── Notas.jsx
 ```
 
