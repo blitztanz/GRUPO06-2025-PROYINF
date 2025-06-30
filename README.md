@@ -137,7 +137,11 @@ CREATE DATABASE plataforma_paes;
 ```
 
 Crea las tablas necesarias: `usuarios`, `preguntas`, `reportes`, `reportes_preguntas`, `notas`.  
-> Consulta el archivo `backend/seed.sql` para ver el script completo.
+
+```bash
+cd backend
+psql -h localhost -U postgres -d plataforma_paes -f schema.sql
+```
 
 ### 3. Arranca el backend
 
