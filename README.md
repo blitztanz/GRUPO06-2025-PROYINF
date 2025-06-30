@@ -154,6 +154,8 @@ psql -h localhost -U postgres -d plataforma_paes -f seed.sql
 
 #### 3.2. Copia el archivo `.env` de ejemplo o créalo manualmente:
 
+DATABASE_URL=postgres://postgres:[password]@localhost:5432/plataforma_paes
+
 ```bash
 cp .env.example .env
 ```
