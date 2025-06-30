@@ -66,8 +66,8 @@ plataforma_PAES/
     └── src/
         ├── App.js
         ├── index.js
-        ├── hooks/
-        │   └── useAuth.js
+        └── assets/
+            └── google-icon.png
         └── components/
             ├── Login.jsx
             ├── MenuProfesor.jsx
@@ -76,6 +76,7 @@ plataforma_PAES/
             ├── CrearReporte.jsx
             ├── VerReportes.jsx
             ├── DetalleReporte.jsx
+            ├── ProtectedRoute.jsx
             ├── VerNotas.jsx
             ├── MenuAlumno.jsx
             ├── MenuExterno.jsx
