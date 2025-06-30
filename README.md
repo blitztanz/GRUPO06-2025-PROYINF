@@ -132,7 +132,7 @@ psql -h localhost -U postgres -d postgres
 #### 2.2. Dentro del prompt de `psql`:
 
 ```sql
-CREATE DATABASE plataforma_paes;
+CREATE DATABASE plataforma_paes ENCODING 'UTF8';
 \c plataforma_paes
 ```
 
