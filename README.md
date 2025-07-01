@@ -52,6 +52,7 @@ plataforma_PAES/
 │   └── routes/
 │       ├── auth.js
 │       ├── alumnos.js
+│       ├── ensayos.js
 │       ├── preguntas.js
 │       ├── reportes.js
 │       └── notas.js
@@ -67,19 +68,26 @@ plataforma_PAES/
         ├── App.js
         ├── index.js
         └── assets/
+            └── UserContext.js
+        └── assets/
             └── google-icon.png
         └── components/
             ├── Login.jsx
             ├── MenuProfesor.jsx
             ├── BancoPreguntas.jsx
             ├── VerAlumnos.jsx
-            ├── CrearReporte.jsx
+            ├── CrearEnsayo.jsx
             ├── VerReportes.jsx
+            ├── VerEnsayos.jsx
             ├── DetalleReporte.jsx
             ├── ProtectedRoute.jsx
             ├── VerNotas.jsx
             ├── MenuAlumno.jsx
             ├── MenuExterno.jsx
+            ├── ResolverEnsayo.jsx
+            ├── ResultadoDetalle.jsx
+            ├── ResultadosCompletos.jsx
+            ├── ResultadosProfe.jsx
             └── Navbar.jsx
 ```
 
