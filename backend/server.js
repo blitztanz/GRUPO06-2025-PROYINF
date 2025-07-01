@@ -12,6 +12,7 @@ import alumnosRouter from './routes/alumnos.js';
 import reportesRouter from './routes/reportes.js';
 import preguntasRouter from './routes/preguntas.js';
 import notasRouter from './routes/notas.js';
+import ensayosRouter from './routes/ensayos.js';
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use('/api/alumnos', alumnosRouter);
 app.use('/api/reportes', reportesRouter);
 app.use('/api/preguntas', preguntasRouter);
 app.use('/api/notas', notasRouter);
+app.use('/api/ensayos', ensayosRouter);
 
 // Puerto
 const PORT = process.env.PORT || 4000;

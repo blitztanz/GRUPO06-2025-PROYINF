@@ -21,8 +21,6 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white shadow-md border-b border-gray-200 px-6 py-4 flex items-center">
-      {/* Opcional: Logo o título */}
-      {/* <div className="text-xl font-bold text-indigo-600 mr-8">PAES</div> */}
 
       <div className="flex flex-wrap items-center space-x-6 flex-grow">
         {user.tipo === 'profesor' && (
@@ -31,7 +29,7 @@ export default function Navbar() {
               to="/menu_profesor"
               className="text-gray-700 hover:text-indigo-600 font-medium transition"
             >
-              Menú Profesor
+              Inicio
             </Link>
             <Link
               to="/menu_profesor/alumnos"
@@ -40,10 +38,16 @@ export default function Navbar() {
               Alumnos
             </Link>
             <Link
-              to="/menu_profesor/reportes"
+              to="/menu_profesor/resultados"
               className="text-gray-700 hover:text-indigo-600 font-medium transition"
             >
-              Crear Reporte
+              Resultados
+            </Link>
+            <Link
+              to="/menu_profesor/ensayos"
+              className="text-gray-700 hover:text-indigo-600 font-medium transition"
+            >
+              Crear Ensayo
             </Link>
             <Link
               to="/menu_profesor/banco_preguntas"
@@ -60,19 +64,19 @@ export default function Navbar() {
               to="/menu_alumno"
               className="text-gray-700 hover:text-indigo-600 font-medium transition"
             >
-              Menú Alumno
+              Inicio
             </Link>
             <Link
-              to="/menu_alumno/reportes"
+              to="/menu_alumno/ensayos"
               className="text-gray-700 hover:text-indigo-600 font-medium transition"
             >
-              Ver Reportes
+              Ensayos PAES
             </Link>
             <Link
-              to="/menu_alumno/notas"
+              to="/menu_alumno/resultados"
               className="text-gray-700 hover:text-indigo-600 font-medium transition"
             >
-              Notas
+              Resultados
             </Link>
           </>
         )}
@@ -83,7 +87,7 @@ export default function Navbar() {
               to="/menu_externo"
               className="text-gray-700 hover:text-indigo-600 font-medium transition"
             >
-              Menú Externo
+              Inicio
             </Link>
             <Link
               to="/menu_externo/reportes"
@@ -95,12 +99,23 @@ export default function Navbar() {
         )}
       </div>
 
-      <button
-        onClick={handleLogout}
-        className="ml-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      >
-        Cerrar sesión
-      </button>
+      <div className="ml-auto flex items-center space-x-4">
+        {user.avatar_url && (
+          <img 
+            src={user.avatar_url} 
+            alt="Perfil" 
+            className="w-10 h-10 rounded-full object-cover border-2 border-indigo-100"
+            referrerPolicy="no-referrer"
+          />
+        )}
+        
+        <button
+          onClick={handleLogout}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        >
+          Cerrar sesión
+        </button>
+      </div>
     </nav>
   );
 }

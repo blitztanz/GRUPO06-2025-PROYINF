@@ -4,16 +4,20 @@ import { useUser } from './context/UserContext';
 // Componentes
 import Login from './components/Login';
 import MenuProfesor from './components/MenuProfesor';
-import CrearReporte from './components/CrearReporte';
+import CrearEnsayo from './components/CrearEnsayo';
 import VerAlumnos from './components/VerAlumnos';
 import MenuAlumno from './components/MenuAlumno';
 import VerReportes from './components/VerReportes';
+import VerEnsayos from './components/VerEnsayos';
+import ResolverEnsayo from './components/ResolverEnsayo';
+import ResultadosCompletos from './components/ResultadosCompletos';
+import ResultadoDetalle from './components/ResultadoDetalle';
 import DetalleReporte from './components/DetalleReporte';
-import VerNotas from './components/VerNotas';
 import MenuExterno from './components/MenuExterno';
 import BancoPreguntas from './components/BancoPreguntas';
 import Navbar from './components/Navbar';
-import ProtectedRoute from './components/ProtectedRoute'; // Nuevo componente
+import ProtectedRoute from './components/ProtectedRoute';
+import ResultadosProfes from './components/ResultadosProfe';
 
 export default function App() {
   const { user } = useUser();
@@ -40,9 +44,14 @@ export default function App() {
               <VerAlumnos />
             </ProtectedRoute>
           } />
-          <Route path="/menu_profesor/reportes" element={
+          <Route path="/menu_profesor/resultados" element={
             <ProtectedRoute allowedRoles={['profesor']}>
-              <CrearReporte />
+              <ResultadosProfes />
+            </ProtectedRoute>
+          } />
+          <Route path="/menu_profesor/ensayos" element={
+            <ProtectedRoute allowedRoles={['profesor']}>
+              <CrearEnsayo />
             </ProtectedRoute>
           } />
           <Route path="/menu_profesor/banco_preguntas" element={
@@ -57,14 +66,29 @@ export default function App() {
               <MenuAlumno />
             </ProtectedRoute>
           } />
+          <Route path="/menu_alumno/ensayos" element={
+            <ProtectedRoute allowedRoles={['alumno']}>
+              <VerEnsayos />
+            </ProtectedRoute>
+          } />
+          <Route path="ensayo/:id" element={
+            <ProtectedRoute allowedRoles={['alumno']}>
+              <ResolverEnsayo />
+            </ProtectedRoute>
+          } />
           <Route path="/menu_alumno/reportes" element={
             <ProtectedRoute allowedRoles={['alumno']}>
               <VerReportes />
             </ProtectedRoute>
           } />
-          <Route path="/menu_alumno/notas" element={
+          <Route path="/menu_alumno/resultados" element={
             <ProtectedRoute allowedRoles={['alumno']}>
-              <VerNotas />
+              <ResultadosCompletos />
+            </ProtectedRoute>
+          } />
+          <Route path="/resultado-detalle/:id" element={
+            <ProtectedRoute allowedRoles={['alumno']}>
+              <ResultadoDetalle />
             </ProtectedRoute>
           } />
 

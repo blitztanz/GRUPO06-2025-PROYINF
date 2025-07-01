@@ -10,10 +10,10 @@ export default function MenuAlumno() {
       <ul className="space-y-4">
         <li>
           <Link
-            to="/menu_alumno/reportes"
+            to="/menu_alumno/ensayos"
             className="flex items-center justify-between px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium rounded-lg transition shadow-sm border border-indigo-200"
           >
-            <span className="text-lg">📄 Ver Reportes</span>
+            <span className="text-lg">✏️ Ensayos PAES</span>
             <svg
               className="w-5 h-5 text-indigo-500"
               fill="none"
@@ -25,13 +25,12 @@ export default function MenuAlumno() {
             </svg>
           </Link>
         </li>
-
         <li>
           <Link
-            to="/notas"
+            to="/menu_alumno/resultados"
             className="flex items-center justify-between px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium rounded-lg transition shadow-sm border border-indigo-200"
           >
-            <span className="text-lg">📝 Mis Notas</span>
+            <span className="text-lg">📊 Resultados</span>
             <svg
               className="w-5 h-5 text-indigo-500"
               fill="none"

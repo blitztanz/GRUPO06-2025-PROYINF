@@ -28,10 +28,28 @@ export default function MenuProfesor() {
 
         <li>
           <Link
-            to="/menu_profesor/reportes"
+            to="/menu_profesor/resultados"
             className="flex items-center justify-between px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium rounded-lg transition shadow-sm border border-indigo-200"
           >
-            <span className="text-lg">📝 Crear Reportes</span>
+            <span className="text-lg">✅ Ver Resultados</span>
+            <svg
+              className="w-5 h-5 text-indigo-500"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/menu_profesor/ensayos"
+            className="flex items-center justify-between px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium rounded-lg transition shadow-sm border border-indigo-200"
+          >
+            <span className="text-lg">📝 Crear Ensayos</span>
             <svg
               className="w-5 h-5 text-indigo-500"
               fill="none"
