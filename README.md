@@ -66,8 +66,8 @@ plataforma_PAES/
     └── src/
         ├── App.js
         ├── index.js
-        ├── hooks/
-        │   └── useAuth.js
+        └── assets/
+            └── google-icon.png
         └── components/
             ├── Login.jsx
             ├── MenuProfesor.jsx
@@ -76,11 +76,11 @@ plataforma_PAES/
             ├── CrearReporte.jsx
             ├── VerReportes.jsx
             ├── DetalleReporte.jsx
+            ├── ProtectedRoute.jsx
             ├── VerNotas.jsx
             ├── MenuAlumno.jsx
             ├── MenuExterno.jsx
-            ├── Navbar.jsx
-            └── Notas.jsx
+            └── Navbar.jsx
 ```
 
 ---
@@ -140,7 +140,7 @@ Crea las tablas necesarias: `usuarios`, `preguntas`, `reportes`, `reportes_pregu
 
 ```bash
 cd backend
-psql -h localhost -U postgres -d plataforma_paes -f schema.sql
+psql -h localhost -U postgres -d plataforma_paes -f schema.sql --encoding=UTF8
 ```
 
 ### 3. Arranca el backend
@@ -149,7 +149,7 @@ psql -h localhost -U postgres -d plataforma_paes -f schema.sql
 
 ```bash
 cd backend
-psql -h localhost -U postgres -d plataforma_paes -f seed.sql
+psql -h localhost -U postgres -d plataforma_paes -f seed.sql --encoding=UTF8
 ```
 
 #### 3.2. Copia el archivo `.env` de ejemplo o créalo manualmente:
