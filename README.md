@@ -7,7 +7,7 @@ Este es el repositorio del "Grupo 09", cuyos integrantes son:
 * Consuelo Gálvez - 202273594-5
 * ~~Lucas Rodríguez - 202273533-3~~ (Vuela alto Lucas <3)
 
-* **Tutor**: Maximiliano Alexander Tapia Castillo
+* **Tutor**: Carlos Arévalo Guajardo
 
 ---
 
