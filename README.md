@@ -1,6 +1,6 @@
-# GRUPO 09 - 2025 - PROYINF
+# GRUPO 06 - 2025 - PROYINF
 
-Este es el repositorio del "Grupo 09", cuyos integrantes son:
+Este es el repositorio del "Grupo 06", cuyos integrantes son:
 
 * Emile Allué - 202273564-3
 * Matías Farías - 202273589-9
