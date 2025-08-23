@@ -1,5 +1,7 @@
 # GRUPO 06 - 2025 - PROYINF
 
+## ¡Proyecto en progreso 2025-2!
+
 Este es el repositorio del "Grupo 06", cuyos integrantes son:
 
 * Emile Allué - 202273564-3
