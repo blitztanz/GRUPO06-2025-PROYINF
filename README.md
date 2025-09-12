@@ -48,9 +48,12 @@ plataforma_PAES/
 │   ├── package.json
 │   ├── package-lock.json
 │   ├── server.js
-│   ├── schema.sql
-│   ├── seed.sql
-│   ├── db.js
+│   ├── .env.example               
+│   ├── db.js                  
+│   ├── schema.sql                 
+│   ├── seed.sql                  
+│   ├── config/
+│   │   └── passport.js           
 │   └── routes/
 │       ├── auth.js
 │       ├── alumnos.js
@@ -58,8 +61,6 @@ plataforma_PAES/
 │       ├── preguntas.js
 │       ├── reportes.js
 │       └── notas.js
-│   └── config/
-│       └── passport.js
 └── frontend/
     ├── .gitignore
     ├── package.json
@@ -67,30 +68,28 @@ plataforma_PAES/
     ├── public/
     │   └── index.html
     └── src/
-        ├── App.js
         ├── index.js
-        └── assets/
-            └── UserContext.js
-        └── assets/
-            └── google-icon.png
+        ├── App.js
+        ├── assets/
+        │   ├── UserContext.js
+        │   └── google-icon.png
         └── components/
             ├── Login.jsx
+            ├── Navbar.jsx
+            ├── MenuAlumno.jsx
             ├── MenuProfesor.jsx
+            ├── MenuExterno.jsx
             ├── BancoPreguntas.jsx
             ├── VerAlumnos.jsx
             ├── CrearEnsayo.jsx
-            ├── VerReportes.jsx
             ├── VerEnsayos.jsx
-            ├── DetalleReporte.jsx
-            ├── ProtectedRoute.jsx
-            ├── VerNotas.jsx
-            ├── MenuAlumno.jsx
-            ├── MenuExterno.jsx
             ├── ResolverEnsayo.jsx
-            ├── ResultadoDetalle.jsx
+            ├── VerReportes.jsx
+            ├── DetalleReporte.jsx
             ├── ResultadosCompletos.jsx
             ├── ResultadosProfe.jsx
-            └── Navbar.jsx
+            ├── ResultadoDetalle.jsx
+            └── VerNotas.jsx
 ```
 
 ---
