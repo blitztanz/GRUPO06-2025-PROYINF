@@ -4,9 +4,9 @@
 
 Este es el repositorio del "Grupo 06", cuyos integrantes son:
 
-* --E̶m̶i̶l̶e̶ ̶A̶l̶l̶u̶é̶ ̶-̶ ̶2̶0̶2̶2̶7̶3̶5̶6̶4̶-̶3̶
 * Matías Farías - 202273589-9
 * Consuelo Gálvez - 202273594-5
+* ~~Emile Allué - 202273564-3~~
 * ~~Lucas Rodríguez - 202273533-3~~ (Vuela alto Lucas <3)
 
 * **Tutor**: Carlos Arévalo Guajardo
