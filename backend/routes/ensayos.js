@@ -167,6 +167,40 @@ router.get('/:id/resultados', async (req, res) => {
   }
 });
 
+// Obtener alumnos que respondieron correctamente o incorrectamente a una pregunta específica de un ensayo
+router.get('/:ensayoId/preguntas/:preguntaId/alumnos', async (req, res) => {
+  const ensayoId = parseInt(req.params.ensayoId, 10);
+  const preguntaId = parseInt(req.params.preguntaId, 10);
+  const correcta = req.query.correcta === 'true';
+
+  if (isNaN(ensayoId) || isNaN(preguntaId)) {
+    return res.status(400).json({ ok: false, error: 'ensayoId o preguntaId inválido' });
+  }
+
+  try {
+    const { rows } = await pool.query(
+      `SELECT 
+         u.id, 
+         u.nombre, 
+         COALESCE(r.respuesta_elegida, 'No respondió') as respuesta_elegida,
+         r.es_correcta
+       FROM respuestas_ensayos r
+       JOIN usuarios u ON u.id = r.alumno_id
+       WHERE r.ensayo_id = $1
+         AND r.pregunta_id = $2
+         AND r.es_correcta = $3
+       ORDER BY u.nombre ASC`,
+      [ensayoId, preguntaId, correcta]
+    );
+
+    res.json({ ok: true, alumnos: rows });
+  } catch (err) {
+    console.error('Error en GET /ensayos/:ensayoId/preguntas/:preguntaId/alumnos:', err);
+    res.status(500).json({ ok: false, error: 'Error al obtener alumnos' });
+  }
+});
+
+
 // Obtener ensayos asignados a un alumno
 router.get('/', async (req, res) => {
   const { alumnoId, profesorId } = req.query;
@@ -364,9 +398,6 @@ router.post('/:id/respuestas', async (req, res) => {
         VALUES ($1, $2, $3, $4, (
           SELECT correcta = $4 FROM preguntas WHERE id = $3
         ))
-        ON CONFLICT (ensayo_id, alumno_id, pregunta_id) DO UPDATE
-        SET respuesta_elegida = EXCLUDED.respuesta_elegida,
-            es_correcta = EXCLUDED.es_correcta
       `, [id, alumnoId, preguntaId, respuesta]);
     }
 
@@ -458,6 +489,41 @@ router.get('/:id/preguntas-respuestas', async (req, res) => {
     return res.status(500).json({ 
       ok: false, 
       error: 'Error al obtener preguntas' 
+    });
+  }
+});
+
+// Obtener preguntas con % de respuestas correctas
+router.get('/:id/preguntas-respuestas-global', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { rows } = await pool.query(`
+      SELECT 
+        p.id AS pregunta_id,
+        p.enunciado,
+        ep.orden,
+        COUNT(re.*) AS total_respuestas,
+        SUM(CASE WHEN re.es_correcta THEN 1 ELSE 0 END) AS correctas,
+        CASE 
+          WHEN COUNT(re.*) = 0 THEN 0
+          ELSE ROUND(100.0 * SUM(CASE WHEN re.es_correcta THEN 1 ELSE 0 END) / COUNT(re.*), 2)
+        END AS porcentaje_correctas
+      FROM preguntas p
+      JOIN ensayos_preguntas ep ON ep.pregunta_id = p.id
+      LEFT JOIN respuestas_ensayos re 
+        ON re.pregunta_id = p.id AND re.ensayo_id = ep.ensayo_id
+      WHERE ep.ensayo_id = $1
+      GROUP BY p.id, p.enunciado, ep.orden
+      ORDER BY ep.orden ASC
+    `, [id]);
+
+    return res.json({ ok: true, preguntas: rows });
+  } catch (err) {
+    console.error(`Error en GET /api/ensayos/${id}/preguntas-respuestas-global:`, err);
+    return res.status(500).json({ 
+      ok: false, 
+      error: 'Error al obtener preguntas con porcentaje de aciertos'
     });
   }
 });
