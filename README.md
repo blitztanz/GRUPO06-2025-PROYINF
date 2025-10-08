@@ -127,7 +127,7 @@ plataforma_PAES/
 ### 1. Clona el repositorio
 
 ```bash
-git clone https://github.com/MatthewBlitztanz/GRUPO09-2025-PROYINF.git
+git clone https://github.com/MatthewBlitztanz/GRUPO09-2025-PROYINF
 cd GRUPO09-2025-PROYINF
 ```
 
