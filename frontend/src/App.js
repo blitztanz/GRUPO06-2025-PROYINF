@@ -18,6 +18,8 @@ import BancoPreguntas from './components/BancoPreguntas';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import ResultadosProfes from './components/ResultadosProfe';
+import CursosSincronizados from "./components/cursos_sincronizados";
+
 
 export default function App() {
   const { user } = useUser();
@@ -58,6 +60,9 @@ export default function App() {
             <ProtectedRoute allowedRoles={['profesor']}>
               <BancoPreguntas />
             </ProtectedRoute>
+          } />
+          <Route path="/menu_profesor/cursos" element={
+            <CursosSincronizados profesorId={localStorage.getItem("profesorId")}/>
           } />
 
           {/* Rutas de alumno */}

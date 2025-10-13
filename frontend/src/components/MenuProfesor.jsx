@@ -83,12 +83,25 @@ export default function MenuProfesor() {
             </svg>
           </Link>
         </li>
+    
+        <li>
+          <Link
+            to="/menu_profesor/cursos"
+            className="flex items-center justify-between px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium rounded-lg transition shadow-sm border border-indigo-200"
+          >
+            <span className="text-lg">📚 Lista de Cursos</span>
+            <svg
+              className="w-5 h-5 text-indigo-500"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </li>
       </ul>
-      {profesorId ? (
-        <CursosSincronizados profesorId={profesorId} />
-      ) : (
-          <p className="text-center text-gray-500">No se encontró el ID del profesor</p>
-      )}
     </div>
   );
 }
