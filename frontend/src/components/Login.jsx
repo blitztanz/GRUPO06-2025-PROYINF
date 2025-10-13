@@ -4,12 +4,15 @@ import { useUser } from '../context/UserContext';
 import googleIcon from '../assets/google-icon.png';
 
 export default function Login() {
-  const { user, login } = useUser(); // Asegúrate de extraer 'login' del contexto
+  const { user, login } = useUser(); // 'user' viene del contexto después de loguearse
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      // Redirige según el tipo de usuario
+      //ghuardar el id del usuario en localStorage
+      localStorage.setItem("profesorId", user.id);
+
+      // ✅ Redirigir según el tipo de usuario
       const route = `/menu_${user.tipo}`;
       navigate(route);
     }
