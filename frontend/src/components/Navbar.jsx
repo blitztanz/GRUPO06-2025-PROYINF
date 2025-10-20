@@ -55,6 +55,12 @@ export default function Navbar() {
             >
               Banco de Preguntas
             </Link>
+            <Link
+              to="/menu_profesor/cursos"
+              className="text-gray-700 hover:text-indigo-600 font-medium transition"
+            >
+              Cursos
+            </Link>
           </>
         )}
 
