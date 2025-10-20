@@ -5,7 +5,8 @@ CREATE TABLE usuarios (
   nombre VARCHAR(100) NOT NULL,
   correo VARCHAR(100) UNIQUE NOT NULL,
   google_id TEXT UNIQUE,
-  avatar_url TEXT
+  avatar_url TEXT,
+  refresh_token TEXT
 );
 
 -- preguntas
