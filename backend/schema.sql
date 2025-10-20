@@ -9,6 +9,25 @@ CREATE TABLE usuarios (
   refresh_token TEXT
 );
 
+-- cursos
+CREATE TABLE cursos (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  id_classroom VARCHAR(255) UNIQUE,
+  seccion VARCHAR(255),
+  profesor_id INT NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- alumnos del cursos
+CREATE TABLE cursos_alumnos (
+  id SERIAL PRIMARY KEY,
+  curso_id INT NOT NULL REFERENCES cursos(id) ON DELETE CASCADE,
+  alumno_id INT NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  fecha_agregado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (curso_id, alumno_id)
+);
+
 -- preguntas
 CREATE TABLE preguntas (
   id SERIAL PRIMARY KEY,
@@ -20,8 +39,7 @@ CREATE TABLE preguntas (
   correcta CHAR(1) NOT NULL CHECK (correcta IN ('a','b','c','d')),
   dificultad VARCHAR(20) NOT NULL CHECK (dificultad IN ('baja', 'media', 'alta')),
   materia VARCHAR(100) NOT NULL,
-  autor_id INTEGER NOT NULL,
-  FOREIGN KEY (autor_id) REFERENCES usuarios(id) ON DELETE CASCADE
+  autor_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 -- Tabla para ensayos
@@ -30,16 +48,15 @@ CREATE TABLE ensayos (
   titulo VARCHAR(255) NOT NULL,
   descripcion TEXT,
   materia VARCHAR(100) NOT NULL,
-  tiempo_limite INTEGER, -- en minutos
-  autor_id INTEGER NOT NULL,
-  fecha_creacion TIMESTAMP DEFAULT NOW(),
-  FOREIGN KEY (autor_id) REFERENCES usuarios(id) ON DELETE CASCADE
+  tiempo_limite INTEGER,
+  autor_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  fecha_creacion TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE ensayos_preguntas (
   ensayo_id INTEGER NOT NULL,
   pregunta_id INTEGER NOT NULL,
-  orden INTEGER NOT NULL,  -- Para definir el orden de las preguntas
+  orden INTEGER NOT NULL,  
   PRIMARY KEY (ensayo_id, pregunta_id),
   FOREIGN KEY (ensayo_id) REFERENCES ensayos(id) ON DELETE CASCADE,
   FOREIGN KEY (pregunta_id) REFERENCES preguntas(id) ON DELETE CASCADE
@@ -60,26 +77,21 @@ CREATE TABLE ensayos_asignados (
 -- Tabla para registrar respuestas de ensayos
 CREATE TABLE respuestas_ensayos (
   id SERIAL PRIMARY KEY,
-  ensayo_id INTEGER NOT NULL,
-  alumno_id INTEGER NOT NULL,
-  pregunta_id INTEGER NOT NULL,
+  ensayo_id INTEGER NOT NULL REFERENCES ensayos(id) ON DELETE CASCADE,
+  alumno_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  pregunta_id INTEGER NOT NULL REFERENCES preguntas(id) ON DELETE CASCADE,
   respuesta_elegida CHAR(1) CHECK (respuesta_elegida IN ('a','b','c','d')),
   es_correcta BOOLEAN,
-  fecha_respuesta TIMESTAMP DEFAULT NOW(),
-  FOREIGN KEY (ensayo_id) REFERENCES ensayos(id) ON DELETE CASCADE,
-  FOREIGN KEY (alumno_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-  FOREIGN KEY (pregunta_id) REFERENCES preguntas(id) ON DELETE CASCADE
+  fecha_respuesta TIMESTAMP DEFAULT NOW()
 );
 
 -- Tabla para resultados de ensayos
 CREATE TABLE resultados_ensayos (
-  ensayo_id INTEGER NOT NULL,
-  alumno_id INTEGER NOT NULL,
+  ensayo_id INTEGER NOT NULL REFERENCES ensayos(id) ON DELETE CASCADE,
+  alumno_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
   puntaje INTEGER NOT NULL,
   total_preguntas INTEGER NOT NULL,
   fecha_completado TIMESTAMP DEFAULT NOW(),
-  tiempo_empleado INTEGER, -- en segundos
-  PRIMARY KEY (ensayo_id, alumno_id),
-  FOREIGN KEY (ensayo_id) REFERENCES ensayos(id) ON DELETE CASCADE,
-  FOREIGN KEY (alumno_id) REFERENCES usuarios(id) ON DELETE CASCADE
+  tiempo_empleado INTEGER,
+  PRIMARY KEY (ensayo_id, alumno_id)
 );
