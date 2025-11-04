@@ -1,4 +1,3 @@
-// components/VerEnsayos.jsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -10,11 +9,25 @@ export default function VerEnsayos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+  const limit = 5;
+
   useEffect(() => {
     const fetchEnsayos = async () => {
+      setLoading(true); 
+      setError(null);
+      
       try {
-        const response = await axios.get(`/api/ensayos?alumnoId=${user.id}`);
+        const response = await axios.get(
+          `/api/ensayos?alumnoId=${user.id}&page=${currentPage}&limit=${limit}`
+        );
+        
         setEnsayos(response.data.ensayos);
+        setTotalPages(response.data.totalPages);
+        setTotalItems(response.data.totalItems);
+        
       } catch (err) {
         setError('Error al cargar los ensayos');
         console.error(err);
@@ -26,7 +39,13 @@ export default function VerEnsayos() {
     if (user?.id) {
       fetchEnsayos();
     }
-  }, [user]);
+  }, [user, currentPage]); 
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   if (loading) {
     return <div className="text-center py-8">Cargando ensayos...</div>;
@@ -43,7 +62,9 @@ export default function VerEnsayos() {
       </h2>
 
       {ensayos.length === 0 ? (
-        <p className="text-center text-gray-500 py-4">No tienes ensayos asignados</p>
+        <p className="text-center text-gray-500 py-4">
+          {currentPage > 1 ? 'No hay más ensayos' : 'No tienes ensayos asignados'}
+        </p>
       ) : (
         <ul className="space-y-4">
           {ensayos.map((ensayo) => (
@@ -74,6 +95,30 @@ export default function VerEnsayos() {
             </li>
           ))}
         </ul>
+      )}
+      
+      {totalPages > 1 && (
+        <div className="flex justify-between items-center mt-8 pt-4 border-t border-gray-200">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-indigo-500 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition"
+          >
+            Anterior
+          </button>
+          
+          <span className="text-sm text-gray-600">
+            Página {currentPage} de {totalPages}
+          </span>
+          
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-indigo-500 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition"
+          >
+            Siguiente
+          </button>
+        </div>
       )}
     </div>
   );

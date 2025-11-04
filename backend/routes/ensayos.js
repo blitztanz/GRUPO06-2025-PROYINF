@@ -205,13 +205,26 @@ router.get('/:ensayoId/preguntas/:preguntaId/alumnos', async (req, res) => {
 router.get('/', async (req, res) => {
   const { alumnoId, profesorId } = req.query;
 
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
   if (alumnoId) {
-    // Lógica existente para alumno
     const validation = validateAlumnoId(alumnoId);
     if (!validation.ok) return res.status(400).json(validation);
     
     try {
-      const { rows } = await pool.query(`
+      const countQuery = `
+        SELECT COUNT(*)
+        FROM ensayos e
+        JOIN ensayos_asignados ea ON e.id = ea.ensayo_id
+        WHERE ea.alumno_id = $1 AND ea.completado = false
+      `;
+      const countResult = await pool.query(countQuery, [alumnoId]);
+      const totalItems = parseInt(countResult.rows[0].count);
+      const totalPages = Math.ceil(totalItems / limit);
+
+      const dataQuery = `
         SELECT 
           e.id, 
           e.titulo, 
@@ -223,25 +236,29 @@ router.get('/', async (req, res) => {
         JOIN ensayos_asignados ea ON e.id = ea.ensayo_id
         WHERE ea.alumno_id = $1 AND ea.completado = false
         ORDER BY ea.fecha_limite ASC
-      `, [alumnoId]);
+        LIMIT $2 OFFSET $3  -- <-- MODIFICADO
+      `;
+      
+      const { rows } = await pool.query(dataQuery, [alumnoId, limit, offset]);
 
-      return res.json({ ok: true, ensayos: rows, total: rows.length });
+      return res.json({
+        ok: true,
+        ensayos: rows,
+        totalPages: totalPages,
+        currentPage: page,
+        totalItems: totalItems
+      });
+
     } catch (err) {
       console.error('Error en GET /api/ensayos (alumno):', err);
       return res.status(500).json({ ok: false, error: 'Error al obtener ensayos' });
     }
   } 
   else if (profesorId) {
-    // Nueva lógica para profesor
     try {
       const { rows } = await pool.query(`
         SELECT 
-          e.id, 
-          e.titulo, 
-          e.descripcion, 
-          e.materia, 
-          e.tiempo_limite,
-          e.fecha_creacion,
+          e.id, e.titulo, e.descripcion, e.materia, e.tiempo_limite, e.fecha_creacion,
           COUNT(ep.pregunta_id) as num_preguntas,
           COUNT(ea.alumno_id) FILTER (WHERE ea.completado = true) as num_completados
         FROM ensayos e
@@ -250,7 +267,7 @@ router.get('/', async (req, res) => {
         WHERE e.autor_id = $1
         GROUP BY e.id
         ORDER BY e.fecha_creacion DESC
-      `, [profesorId]);
+      `, [profesorId]); 
 
       return res.json({ ok: true, ensayos: rows });
     } catch (err) {
@@ -258,18 +275,11 @@ router.get('/', async (req, res) => {
       return res.status(500).json({ ok: false, error: 'Error al obtener ensayos' });
     }
   } else {
-// Nueva lógica para usuarios externos (o cualquier otro usuario)
     try {
       const { rows } = await pool.query(`
         SELECT 
-          e.id, 
-          e.titulo, 
-          e.descripcion, 
-          e.materia, 
-          e.tiempo_limite,
-          e.fecha_creacion,
-          e.autor_id,
-          COUNT(ep.pregunta_id) as num_preguntas
+          e.id, e.titulo, e.descripcion, e.materia, e.tiempo_limite,
+          e.fecha_creacion, e.autor_id, COUNT(ep.pregunta_id) as num_preguntas
         FROM ensayos e
         LEFT JOIN ensayos_preguntas ep ON e.id = ep.ensayo_id
         GROUP BY e.id
@@ -279,7 +289,8 @@ router.get('/', async (req, res) => {
     } catch (err) {
       console.error('Error en GET /api/ensayos (externo):', err);
       return res.status(500).json({ ok: false, error: 'Error al obtener ensayos' });
-    }  }
+    }
+  }
 });
 
 // Obtener detalles de un ensayo específico
