@@ -285,6 +285,7 @@ router.get('/', async (req, res) => {
         GROUP BY e.id
         ORDER BY e.fecha_creacion DESC
       `);
+      
       return res.json({ ok: true, ensayos: rows });
     } catch (err) {
       console.error('Error en GET /api/ensayos (externo):', err);
