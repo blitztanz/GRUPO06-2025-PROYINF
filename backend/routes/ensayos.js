@@ -6,7 +6,8 @@ const router = Router();
 // Validar ID de alumno
 const validateAlumnoId = (alumnoId) => {
   if (!alumnoId) return { ok: false, error: 'Se requiere alumnoId' };
-  if (isNaN(Number(alumnoId))) return { ok: false, error: 'alumnoId debe ser numérico' };
+  const numericId = Number.parseInt(alumnoId, 10);
+  if (Number.isNaN(numericId)) return { ok: false, error: 'alumnoId debe ser numérico' };
   return { ok: true };
 };
 
@@ -65,8 +66,8 @@ router.get('/resultados-alumno', async (req, res) => {
     });
   }
 
-  const alumnoId = parseInt(req.query.alumnoId, 10);
-  if (isNaN(alumnoId)) {
+  const alumnoId = Number.parseInt(req.query.alumnoId, 10);
+  if (Number.isNaN(alumnoId)) {
     return res.status(400).json({ 
       ok: false, 
       error: 'alumnoId debe ser un número válido' 
@@ -169,11 +170,11 @@ router.get('/:id/resultados', async (req, res) => {
 
 // Obtener alumnos que respondieron correctamente o incorrectamente a una pregunta específica de un ensayo
 router.get('/:ensayoId/preguntas/:preguntaId/alumnos', async (req, res) => {
-  const ensayoId = parseInt(req.params.ensayoId, 10);
-  const preguntaId = parseInt(req.params.preguntaId, 10);
+  const ensayoId = Number.parseInt(req.params.ensayoId, 10);
+  const preguntaId = Number.parseInt(req.params.preguntaId, 10);
   const correcta = req.query.correcta === 'true';
 
-  if (isNaN(ensayoId) || isNaN(preguntaId)) {
+  if (Number.isNaN(ensayoId) || Number.isNaN(preguntaId)) {
     return res.status(400).json({ ok: false, error: 'ensayoId o preguntaId inválido' });
   }
 
@@ -205,8 +206,8 @@ router.get('/:ensayoId/preguntas/:preguntaId/alumnos', async (req, res) => {
 router.get('/', async (req, res) => {
   const { alumnoId, profesorId } = req.query;
 
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const page = Number.parseInt(req.query.page, 10) || 1;
+  const limit = Number.parseInt(req.query.limit, 10) || 10;
   const offset = (page - 1) * limit;
 
   if (alumnoId) {
@@ -221,7 +222,7 @@ router.get('/', async (req, res) => {
         WHERE ea.alumno_id = $1 AND ea.completado = false
       `;
       const countResult = await pool.query(countQuery, [alumnoId]);
-      const totalItems = parseInt(countResult.rows[0].count);
+      const totalItems = Number.parseInt(countResult.rows[0].count, 10);
       const totalPages = Math.ceil(totalItems / limit);
 
       const dataQuery = `

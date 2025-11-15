@@ -1,12 +1,11 @@
-// frontend/src/context/UserContext.jsx
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // Verifica la sesión al cargar
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -22,27 +21,33 @@ export function UserProvider({ children }) {
     checkAuth();
   }, []);
 
-  const login = () => {
+  const login = useCallback(() => {
     window.open('http://localhost:4000/auth/google', '_self');
-  };
+  }, []); 
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       const response = await fetch('http://localhost:4000/auth/logout', {
         method: 'POST',
-        credentials: 'include' // Importante para las cookies
+        credentials: 'include' 
       });
       
       if (!response.ok) throw new Error('Error en la respuesta del servidor');
-      setUser(null); // Limpia el estado del usuario
+      setUser(null); 
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
-      // Puedes mostrar una notificación al usuario aquí
     }
-  };
+  }, [setUser]); 
+
+  const contextValue = useMemo(() => ({
+    user,
+    login,
+    logout,
+    setUser
+  }), [user, login, logout]);
 
   return (
-    <UserContext.Provider value={{ user, login, logout, setUser }}>
+    <UserContext.Provider value={contextValue}>
       {children}
     </UserContext.Provider>
   );
@@ -51,3 +56,7 @@ export function UserProvider({ children }) {
 export function useUser() {
   return useContext(UserContext);
 }
+
+UserProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};

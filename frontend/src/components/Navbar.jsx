@@ -7,13 +7,11 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    if (window.confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-      try {
-        await logout();
-        navigate('/login');
-      } catch (error) {
-        alert('Ocurrió un error al cerrar sesión');
-      }
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Ocurrió un error al cerrar sesión:', error);
     }
   };
 

@@ -117,7 +117,7 @@ export default function BancoPreguntas() {
           <div className="grid grid-cols-2 gap-4">
             {form.opciones.map((opt, i) => (
               <input
-                key={i}
+                key={`opcion-input-${i}`}
                 type="text"
                 placeholder={`Opción ${i + 1}`}
                 value={opt}
@@ -136,7 +136,7 @@ export default function BancoPreguntas() {
           >
             <option value="">Respuesta Correcta</option>
             {form.opciones.map((opt, i) => (
-              <option key={i} value={['a', 'b', 'c', 'd'][i]}>
+              <option key={`opcion-select-${i}`} value={['a', 'b', 'c', 'd'][i]}>
                 {opt || `Opción ${i + 1}`}
               </option>
             ))}

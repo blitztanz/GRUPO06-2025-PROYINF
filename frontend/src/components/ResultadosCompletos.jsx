@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useUser } from '../context/UserContext';
 import { Link } from 'react-router-dom';
@@ -9,41 +9,48 @@ export default function ResultadosCompletos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchResultados = async () => {
-      try {
-        // Verificación doble del user.id
-        if (!user?.id || isNaN(Number(user.id))) {
-          throw new Error('ID de usuario inválido');
-        }
+  const fetchResultados = useCallback(async () => {
+    setLoading(true);
+    setError(null);
 
-        const alumnoId = Number(user.id);
-        console.log('Enviando request con alumnoId:', alumnoId);
-        
-        const response = await axios.get('/api/ensayos/resultados-alumno', {
-          params: { alumnoId }
-        });
-        
-        console.log('Respuesta recibida:', response.data);
-        
-        if (response.data.ok) {
-          setResultados(response.data.resultados);
-        } else {
-          throw new Error(response.data.error || 'Error en la respuesta');
-        }
-      } catch (err) {
-        console.error('Error al obtener resultados:', err);
-        console.error('Detalles del error:', err.response?.data);
-        setError(err.response?.data?.error || err.message);
-      } finally {
-        setLoading(false);
+    try {
+      const alumnoId = Number.parseInt(user?.id, 10);
+      if (Number.isNaN(alumnoId)) {
+        throw new Error('ID de usuario inválido');
       }
-    };
+      
+      console.log('Enviando request con alumnoId:', alumnoId);
+      
+      const response = await axios.get('/api/ensayos/resultados-alumno', {
+        params: { alumnoId }
+      });
+      
+      console.log('Respuesta recibida:', response.data);
+      
+      if (response.data.ok) {
+        setResultados(response.data.resultados);
+      } else {
+        throw new Error(response.data.error || 'Error en la respuesta');
+      }
+    } catch (err) {
+      console.error('Error al obtener resultados:', err);
+      console.error('Detalles del error:', err.response?.data);
+      setError(err.response?.data?.error || err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [user]); 
 
+  useEffect(() => {
     if (user?.id) {
       fetchResultados();
+    } else if (user) {
+      setError('ID de usuario no encontrado');
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
-  }, [user]);
+  }, [user, fetchResultados]); 
 
   if (loading) {
     return <div className="text-center py-8">Cargando resultados...</div>;
@@ -54,7 +61,7 @@ export default function ResultadosCompletos() {
       <div className="text-center py-8">
         <p className="text-red-500">Error: {error}</p>
         <button 
-          onClick={() => window.location.reload()}
+          onClick={fetchResultados}
           className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded"
         >
           Reintentar

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 function CursosSincronizados({ profesorId }) {
-  const [data, setData] = useState({ cursos: [] }); // Inicializa cursos vacío
+  const [data, setData] = useState({ cursos: [] }); 
   const [loading, setLoading] = useState(false);
 
   const fetchCursos = async () => {
@@ -9,8 +10,7 @@ function CursosSincronizados({ profesorId }) {
     try {
       const res = await fetch(`http://localhost:4000/api/classroom/sync-cursos/${profesorId}`);
       const json = await res.json();
-      // Asegúrate de que siempre haya cursos como array
-      setData(json && json.cursos ? { ...json, cursos: json.cursos } : { cursos: [] });
+      setData(json?.cursos ? { ...json, cursos: json.cursos } : { cursos: [] });
     } catch (error) {
       console.error("Error al sincronizar cursos:", error);
       setData({ cursos: [] });
@@ -23,7 +23,6 @@ function CursosSincronizados({ profesorId }) {
     fetchCursos();
   }, [profesorId]);
 
-  // Protege length con optional chaining y valores por defecto
   const cursos = data?.cursos || [];
 
   if (loading && cursos.length === 0) {
@@ -31,9 +30,11 @@ function CursosSincronizados({ profesorId }) {
       <div className="p-8 bg-white shadow-md rounded-2xl flex flex-col items-center justify-center min-h-[300px] text-center">
         <div
           className="w-12 h-12 border-4 border-indigo-500 border-b-transparent rounded-full animate-spin mb-4"
-          role="status"
+          aria-hidden="true" 
         />
-        <p className="text-lg font-medium text-gray-700">Sincronizando cursos...</p>
+        <p role="status" className="text-lg font-medium text-gray-700">
+          Sincronizando cursos...
+        </p>
       </div>
     );
   }
@@ -102,5 +103,12 @@ function CursosSincronizados({ profesorId }) {
     </div>
   );
 }
+
+CursosSincronizados.propTypes = {
+  profesorId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired
+};
 
 export default CursosSincronizados;

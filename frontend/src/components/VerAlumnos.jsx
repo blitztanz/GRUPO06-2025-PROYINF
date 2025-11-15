@@ -112,8 +112,9 @@ export default function VerAlumnos() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-700 mb-1">Ensayo</label>
+                <label htmlFor="ensayoSelect" className="block text-gray-700 mb-1">Ensayo</label>
                 <select
+                  id="ensayoSelect"
                   value={asignacion.ensayoId}
                   onChange={(e) => setAsignacion({ ...asignacion, ensayoId: e.target.value })}
                   className="w-full p-2 border rounded"
@@ -129,9 +130,10 @@ export default function VerAlumnos() {
               </div>
 
               <div>
-                <label className="block text-gray-700 mb-1">Fecha Límite</label>
+                <label htmlFor="fechaLimiteInput" className="block text-gray-700 mb-1">Fecha Límite</label>
                 <input
                   type="datetime-local"
+                  id="fechaLimiteInput"
                   value={asignacion.fechaLimite}
                   onChange={(e) => setAsignacion({ ...asignacion, fechaLimite: e.target.value })}
                   className="w-full p-2 border rounded"

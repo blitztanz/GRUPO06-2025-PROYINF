@@ -36,7 +36,7 @@ CREATE TABLE preguntas (
   opcion_b VARCHAR(255) NOT NULL,
   opcion_c VARCHAR(255) NOT NULL,
   opcion_d VARCHAR(255) NOT NULL,
-  correcta CHAR(1) NOT NULL CHECK (correcta IN ('a','b','c','d')),
+  correcta VARCHAR(1) NOT NULL CHECK (correcta IN ('a','b','c','d')),
   dificultad VARCHAR(20) NOT NULL CHECK (dificultad IN ('baja', 'media', 'alta')),
   materia VARCHAR(100) NOT NULL,
   autor_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE
@@ -80,7 +80,7 @@ CREATE TABLE respuestas_ensayos (
   ensayo_id INTEGER NOT NULL REFERENCES ensayos(id) ON DELETE CASCADE,
   alumno_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
   pregunta_id INTEGER NOT NULL REFERENCES preguntas(id) ON DELETE CASCADE,
-  respuesta_elegida CHAR(1) CHECK (respuesta_elegida IN ('a','b','c','d')),
+  respuesta_elegida VARCHAR(1) CHECK (respuesta_elegida IN ('a','b','c','d')),
   es_correcta BOOLEAN,
   fecha_respuesta TIMESTAMP DEFAULT NOW()
 );

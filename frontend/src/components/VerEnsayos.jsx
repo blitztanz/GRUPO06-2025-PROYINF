@@ -11,7 +11,6 @@ export default function VerEnsayos() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [totalItems, setTotalItems] = useState(0);
   const limit = 5;
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export default function VerEnsayos() {
         
         setEnsayos(response.data.ensayos);
         setTotalPages(response.data.totalPages);
-        setTotalItems(response.data.totalItems);
         
       } catch (err) {
         setError('Error al cargar los ensayos');

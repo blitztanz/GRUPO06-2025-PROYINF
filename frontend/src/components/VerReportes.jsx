@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useUser } from '../context/UserContext';
 
 export default function VerReportes() {
-  const { user } = useUser();
   const [ensayos, setEnsayos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,7 +18,6 @@ export default function VerReportes() {
         
         const data = await response.json();
         if (data.ok) {
-          // Para cada ensayo, obtener los resultados
           const ensayosConResultados = await Promise.all(
             data.ensayos.map(async ensayo => {
               const resResultados = await fetch(
@@ -29,7 +26,6 @@ export default function VerReportes() {
               );
               const resultadosData = await resResultados.json();
               
-              // Obtener información del profesor
               const resProfesor = await fetch(
                 `http://localhost:4000/api/alumnos/${ensayo.autor_id}`,
                 { credentials: 'include' }
@@ -60,8 +56,14 @@ export default function VerReportes() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      <div className="flex justify-center items-center h-64 flex-col">
+        <div 
+          className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"
+          aria-hidden="true" 
+        ></div>
+        <p role="status" className="mt-4 text-gray-600">
+          Cargando reportes...
+        </p>
       </div>
     );
   }
@@ -121,8 +123,8 @@ export default function VerReportes() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {ensayo.resultados.map((resultado, idx) => (
-                          <tr key={idx}>
+                        {ensayo.resultados.map((resultado) => (
+                          <tr key={resultado.alumno_id}>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                               {resultado.alumno_nombre}
                             </td>

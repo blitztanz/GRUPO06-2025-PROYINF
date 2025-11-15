@@ -1,9 +1,5 @@
 import { Link } from 'react-router-dom';
-import CursosSincronizados from "../components/cursos_sincronizados";
-
 export default function MenuProfesor() {
-
-  const profesorId = localStorage.getItem("profesorId");
   
   return (
     <div className="max-w-3xl w-full mx-auto bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mt-16 mb-8">

@@ -2,9 +2,9 @@ import { Router } from 'express'
 import { pool }  from '../db.js'
 const router = Router()
 
-// GET /api/notas?alumnoId=123   → devuelve todas las notas de ese alumno
+// GET /api/notas?alumnoId
 router.get('/', async (req, res) => {
-  const alumnoId = parseInt(req.query.alumnoId, 10)
+  const alumnoId = Number.parseInt(req.query.alumnoId, 10)
   if (!alumnoId) return res.status(400).json({ ok:false, error:'Falta alumnoId' })
   try {
     const { rows } = await pool.query(`
@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
 })
 
 // POST /api/notas
-// { alumnoId, reporteId, valor }
 router.post('/', async (req, res) => {
   const { alumnoId, reporteId, valor } = req.body
   if (!alumnoId || !reporteId || valor == null)
