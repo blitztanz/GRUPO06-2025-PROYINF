@@ -16,7 +16,7 @@ export default function ResultadosCompletos() {
     try {
       const alumnoId = Number.parseInt(user?.id, 10);
       if (Number.isNaN(alumnoId)) {
-        throw new Error('ID de usuario inválido');
+        throw new TypeError('ID de usuario inválido');
       }
       
       console.log('Enviando request con alumnoId:', alumnoId);

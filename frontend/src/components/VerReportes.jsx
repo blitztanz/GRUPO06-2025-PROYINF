@@ -61,9 +61,9 @@ export default function VerReportes() {
           className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"
           aria-hidden="true" 
         ></div>
-        <p role="status" className="mt-4 text-gray-600">
+        <output className="mt-4 text-gray-600">
           Cargando reportes...
-        </p>
+        </output>
       </div>
     );
   }

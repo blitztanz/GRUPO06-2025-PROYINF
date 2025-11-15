@@ -32,9 +32,9 @@ function CursosSincronizados({ profesorId }) {
           className="w-12 h-12 border-4 border-indigo-500 border-b-transparent rounded-full animate-spin mb-4"
           aria-hidden="true" 
         />
-        <p role="status" className="text-lg font-medium text-gray-700">
+        <output className="text-lg font-medium text-gray-700">
           Sincronizando cursos...
-        </p>
+        </output>
       </div>
     );
   }
